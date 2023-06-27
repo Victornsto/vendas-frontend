@@ -18,7 +18,8 @@ import { ClientesListaComponent } from './clientes-lista/clientes-lista.componen
     FormsModule // Setado manutalmente para trabalhar com forms
   ],
   exports:[
-    ClientesFormComponent
+    ClientesFormComponent,
+    ClientesListaComponent
   ]
 })
 export class ClientesModule { }

@@ -2,22 +2,39 @@ import { Injectable } from '@angular/core';
 import { Cliente } from './clientes/cliente';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientesService {
 
+  apiURL = environment.apiURL + "/api/clientes";
+
   constructor(private http: HttpClient) { }
 
   salvar(cliente : Cliente) : Observable<Cliente> {
-    return this.http.post<Cliente>('http://localhost:8080/api/clientes', cliente)
+    return this.http.post<Cliente>(this.apiURL, cliente)
   }
 
-  getCliente() : Cliente {
-    let cliente : Cliente = new Cliente();
-    cliente.nome = "Fulano";
-    cliente.cpf= "000000000"
-    return cliente;
+  atualizar(cliente : Cliente) : Observable<any> {
+    return this.http.put<Cliente>(this.apiURL + " / " + cliente.id, cliente)
   }
+
+  getCliente() : Observable<Cliente[]> {
+    return this.http.get<Cliente[]>(this.apiURL);
+  }
+
+  getClienteById( id: number) : Observable<Cliente> {
+    console.log(this.apiURL + "/" + id);
+    
+    return this.http.get<Cliente>(this.apiURL + "/" + id);
+  }
+
+  deleteCliente(cliente : Cliente) : Observable<any>{
+    return this.http.delete<any>(this.apiURL + "/" + cliente.id);
+  }
+
+
+
 }
